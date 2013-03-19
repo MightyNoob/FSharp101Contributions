@@ -1,0 +1,63 @@
+== Intent ==
+
+A simple implementation in [[Language:FSharp|F#]] for the [[Technology:.NET]] Framework
+
+== Languages ==
+
+* [[Language:FSharp]] (F#): Programming language used for all code (Version 4.0)
+
+== Technologies ==
+
+* [[Technology:fcs.exe]]: F# compiler (Version 4.0)
+* [[Technology:.NET]]: framework used to execute compiled code (Version 4.0)
+* [[Technology:NUnit]]: unit testing framework used for testing (Version 2.6.2)
+* [[Technology:Visual Studio]]: optional IDE (Version 2010)
+
+== Features ==
+
+* [[101feature:Company]]
+* [[101feature:Total]]
+* [[101feature:Cut]]
+
+== Motivation ==
+
+Multiparadigm nature of F# is shown;
+an existing F# - Implementation has been changed to use pipelining
+
+
+== Illustration ==
+
+
+<syntaxhighlight lang="fsharp">
+    	  type Department() =
+	   class
+        let mutable name = ""
+        let mutable manager= new Employee(new Person())
+        let mutable employees = new List<Employee>()
+        let mutable subUnits = new List<Department>()
+
+        member this.Name with get() = name and set v = name <- v
+        member this.Manager with get() = manager and set v = manager <- v
+        member this.Employees with get() = employees and set v = employees <- v
+        member this.SubUnits with get() = subUnits and set v = subUnits <- v
+        
+        member this.Cut =
+            List.iter (fun (dept:Department) -> dept.Cut) (List.ofSeq subUnits)
+            manager.Salary <- manager.Salary / 2M
+            List.iter (fun (emp:Employee) -> emp.Salary <- emp.Salary / 2M) (List.ofSeq employees)
+</syntaxhighlight>
+
+
+Here the former singlenamed intermediate expressions were turned into a pipeline, where every intermediate Result is "pipelined" into the next lambda function.
+
+<syntaxhighlight lang="fsharp">
+ member this.Total with get() =
+         manager.Salary
+          |> fun t -> List.fold (fun (acc) (elem:Department) -> acc + elem.Total) t (List.ofSeq subUnits)
+          |> fun t -> List.fold (fun (acc) (elem:Employee) -> acc + elem.Salary) t (List.ofSeq employees)
+</syntaxhighlight>
+
+== Contributors ==
+
+* {{101contributor|Andrei Varanovich|developer of the basecase}}
+* {{Student|Marcus Opdenberg|altered basecase for support of Pipelines}}
