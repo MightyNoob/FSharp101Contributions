@@ -6,18 +6,18 @@ A simple implementation in [[Language:FSharp|F#]] for the [[Technology:.NET]] Fr
 
 The contribution demonstrates object oriented style of [[functional programming]] in [[Language:FSharp|F#]]. 
 Persons, Employees, Departments and Companies are represented via [[class]] types.  [[Pure function]]s are implemented 
-in piplining style to realise totaling and cutting salaries.
+in pipelining style to realize totaling and cutting salaries.
 
 == Illustration ==
 
 The company model uses classes for [[data composition]]:
 
-Basic types for [[string]]s and [[float]]s are used to represent names, addresses and saleries. 
+Basic types for [[string]]s and [[float]]s are used to represent names, addresses and salaries. 
 More advanced [[list]]s are used to represent a collection of the recently named [[class]]es (Employee, Department)
 
 
 [[Feature:Salary total]] and [[Feature:Salary cut]] are implemented by families of functions on the company types. 
-We only show the family for totaling salaries here which uses piplinging style.
+We only show the family for totaling salaries here which uses pipelining style.
 
 <syntaxhighlight lang="fsharp">
 -- Total all salaries in a company
@@ -39,9 +39,9 @@ See [[Contribution:fsharp]] for a non pipelined implementation of[[101feature:To
 
 == Architecture ==
 
-The contribution consits of four modules: "CompanyModels.fs" which contains the definition of the used classes (including the total / cut function); 
+The contribution consists of four modules: "CompanyModels.fs" which contains the definition of the used classes (including the total / cut function); 
 "CompanyBuilder.fs" which creates a sample instance of a company; 
-"Program.fs" which basically creates a sample company through "buildCompany" of "CompanyBuilder.fs" and executes total printing the results (simple tasting);
+"Program.fs" which basically creates a sample company through "buildCompany" of "CompanyBuilder.fs" and executes total printing the results (simple testing);
 "Test.fs" which contains a professional NUnit Test scenario.
 
 == Metadata ==
