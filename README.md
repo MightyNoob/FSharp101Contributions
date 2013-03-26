@@ -1,4 +1,58 @@
-# Intent
-A simple implementation in F# for the .NET Framework
+== Headline ==
 
-For more information visit the [101companies wiki](http://www.101companies.org).
+A simple implementation in [[Language:FSharp|F#]] for the [[Technology:.NET]] Framework
+
+== Characteristics ==
+
+The contribution demonstrates object oriented style of [[functional programming]] in [[Language:FSharp|F#]]. 
+Persons, Employees, Departments and Companies are represented via [[class]] types.  [[Pure function]]s are implemented 
+in piplining style to realise totaling and cutting salaries.
+
+== Illustration ==
+
+The company model uses classes for [[data composition]]:
+
+Basic types for [[string]]s and [[float]]s are used to represent names, addresses and saleries. 
+More advanced [[list]]s are used to represent a collection of the recently named [[class]]es (Employee, Department)
+
+
+[[Feature:Salary total]] and [[Feature:Salary cut]] are implemented by families of functions on the company types. 
+We only show the family for totaling salaries here which uses piplinging style.
+
+<syntaxhighlight lang="fsharp">
+-- Total all salaries in a company
+-- TotalSalaries:: Company -> Decimal
+member this.TotalSalaries = 
+  	List.fold (fun (acc) (elem:Department) -> acc + elem.Total) 0M (List.ofSeq departments)
+
+-- Total all salaries in a department
+-- Total:: Department -> Decimal
+member this.Total with get() =
+         manager.Salary
+          |> fun t -> List.fold (fun (acc) (elem:Department) -> acc + elem.Total) t (List.ofSeq subUnits)
+          |> fun t -> List.fold (fun (acc) (elem:Employee) -> acc + elem.Salary) t (List.ofSeq employees)
+</syntaxhighlight>
+
+== Relationships ==
+
+See [[Contribution:fsharp]] for a non pipelined implementation of[[101feature:Total]]
+
+== Architecture ==
+
+The contribution consits of four modules: "CompanyModels.fs" which contains the definition of the used classes (including the total / cut function); 
+"CompanyBuilder.fs" which creates a sample instance of a company; 
+"Program.fs" which basically creates a sample company through "buildCompany" of "CompanyBuilder.fs" and executes total printing the results (simple tasting);
+"Test.fs" which contains a professional NUnit Test scenario.
+
+== Metadata ==
+
+* [[uses::Language:FSharp|F#]]
+* [[uses::Technology:fcs.exe]]
+* [[uses::Technology:.NET]]
+* [[uses::Technology:NUnit]]
+* [[uses::Technology:Visual Studio]]
+* [[implements::Feature:Salary total]]
+* [[implements::Feature:Salary cut]]
+* [[implements::Feature:Company]]
+* [[developedBy::Contributor:Andrei Varanovich]]
+* [[developedBy::Contributor:Marcus Opdenberg]]
